@@ -1,0 +1,2 @@
+map <F10> :NERDTreeToggle<CR>
+let NERDTreeShowBookmarks=1
