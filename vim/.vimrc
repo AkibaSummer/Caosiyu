@@ -281,18 +281,44 @@ endfunc
     let g:miniBufExplVSplit = 15    "25  
     let g:miniBufExplSplitBelow=1  
       
-map <F10> :NERDTreeToggle<CR>
+
+"
+"             __                __          
+"     __   __/_/___ ___  ____  / /_  _______
+"     \ \ / / / __ `__ \/ __ \/ / / / / ___/
+"      \ V / / / / / / / /_/ / / /_/ (__  )
+"       \_/_/_/ /_/ /_/ ,___/_/\____/____/
+"                    /_/
+"            
+"
+" Author: chxuan <787280310@qq.com>
+" Repository: https://github.com/chxuan/vimplus
+" Create Date: 2016-04-10
+" License: MIT
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 通用设置
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader = ","      " 定义<leader>键
+set nocompatible         " 设置不兼容原始vi模式
+filetype on              " 设置开启文件类型侦测
 filetype plugin on       " 设置加载对应文件类型的插件
+set noeb                 " 关闭错误的提示
+syntax enable            " 开启语法高亮功能
+syntax on                " 自动语法高亮
 set t_Co=256             " 开启256色支持
 set cmdheight=2          " 设置命令行的高度
 set showcmd              " select模式下显示选中的行数
 set ruler                " 总是显示光标位置
 set laststatus=2         " 总是显示状态栏
+set number               " 开启行号显示
+set cursorline           " 高亮显示当前行
 set whichwrap+=<,>,h,l   " 设置光标键跨行
 set ttimeoutlen=0        " 设置<ESC>键响应时间
 set virtualedit=block,onemore   " 允许光标出现在最后一个字符的后面
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 代码缩进和排版
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set autoindent           " 设置自动缩进
 set cindent              " 设置使用C/C++语言的自动缩进方式
@@ -310,7 +336,13 @@ set sidescroll=10        " 设置向右滚动字符数
 set nofoldenable         " 禁用折叠代码
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" 搜索设置
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set hlsearch            " 高亮显示搜索结果
+set incsearch           " 开启实时搜索功能
+set ignorecase          " 搜索时大小写不敏感
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 缓存设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nobackup            " 设置不备份
@@ -334,23 +366,23 @@ set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030
 call plug#begin('~/.vim/plugged')
 
 Plug 'chxuan/change-colorscheme'
-Plug 'chxuan/vim-buffer'
 Plug 'chxuan/vimplus-startify'
-Plug 'easymotion/vim-easymotion'
-Plug 'iamcco/markdown-preview.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'ryanoasis/vim-devicons'
 
 call plug#end()            
+
+" load vim default plugin
+runtime macros/matchit.vim
 
 
 " 安装、更新、删除插件
 nnoremap <leader><leader>i :PlugInstall<cr>
 nnoremap <leader><leader>u :PlugUpdate<cr>
 nnoremap <leader><leader>c :PlugClean<cr>
+
 
 " 打开文件自动定位到最后编辑的位置
 autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | execute "normal! g'\"" | endif
@@ -372,9 +404,21 @@ let g:airline_right_sep = ''
 let g:airline_right_alt_sep = ''
 
 
+" change-colorscheme
+nnoremap <silent> <F9> :PreviousColorScheme<cr>
+inoremap <silent> <F9> <esc> :PreviousColorScheme<cr>
+nnoremap <silent> <F10> :NextColorScheme<cr>
+inoremap <silent> <F10> <esc> :NextColorScheme<cr>
+nnoremap <silent> <F11> :RandomColorScheme<cr>
+inoremap <silent> <F11> <esc> :RandomColorScheme<cr>
+nnoremap <silent> <F12> :ShowColorScheme<cr>
+inoremap <silent> <F12> <esc> :ShowColorScheme<cr>
+
+" prepare-code
+let g:prepare_code_plugin_path = expand($HOME . "/.vim/plugged/prepare-code")
+
+
 " nerdtree
-nnoremap <silent> <leader>n :NERDTreeToggle<cr>
-inoremap <silent> <leader>n <esc> :NERDTreeToggle<cr>
 let g:NERDTreeFileExtensionHighlightFullName = 1
 let g:NERDTreeExactMatchHighlightFullName = 1
 let g:NERDTreePatternMatchHighlightFullName = 1
@@ -383,22 +427,32 @@ let g:NERDTreeHighlightFoldersFullName = 1
 let g:NERDTreeDirArrowExpandable='▷'
 let g:NERDTreeDirArrowCollapsible='▼'
 
-" markdown
-let uname = system('uname -s')
-if uname == "Darwin\n"
-    let g:mkdp_path_to_chrome = "/Applications/Google\\ Chrome.app/Contents/MacOS/Google\\ Chrome"
-else
-    let g:mkdp_path_to_chrome = '/usr/bin/google-chrome-stable %U'
-endif
-nmap <silent> <F7> <Plug>MarkdownPreview
-imap <silent> <F7> <Plug>MarkdownPreview
-nmap <silent> <F8> <Plug>StopMarkdownPreview
-imap <silent> <F8> <Plug>StopMarkdownPreview
 
-" vim-easymotion
-let g:EasyMotion_smartcase = 1
-map <leader>w <Plug>(easymotion-bd-w)
-nmap <leader>w <Plug>(easymotion-overwin-w)
+" ctags
+set tags+=/usr/include/tags
+set tags+=~/.vim/systags
+set tags+=~/.vim/x86_64-linux-gnu-systags
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_semantic_triggers =  {
+  \   'c' : ['->', '.','re![_a-zA-z0-9]'],
+  \   'objc' : ['->', '.', 're!\[[_a-zA-Z]+\w*\s', 're!^\s*[^\W\d]\w*\s',
+  \             're!\[.*\]\s'],
+  \   'ocaml' : ['.', '#'],
+  \   'cpp,objcpp' : ['->', '.', '::','re![_a-zA-Z0-9]'],
+  \   'perl' : ['->'],
+  \   'php' : ['->', '::'],
+  \   'cs,java,javascript,typescript,d,python,perl6,scala,vb,elixir,go' : ['.'],
+  \   'ruby' : ['.', '::'],
+  \   'lua' : ['.', ':'],
+  \   'erlang' : [':'],
+  \ }
+let g:ycm_semantic_triggers.c = ['->', '.', ' ', '(', '[', '&',']']
+
+" tagbar
+let g:tagbar_width = 30
+nnoremap <silent> <leader>t :TagbarToggle<cr>
+inoremap <silent> <leader>t <esc> :TagbarToggle<cr>
+
 
 " nerdtree-git-plugin
 let g:NERDTreeIndicatorMapCustom = {
@@ -415,9 +469,18 @@ let g:NERDTreeIndicatorMapCustom = {
     \ }
 
 
+" echodoc.vim
+let g:echodoc_enable_at_startup = 1
+
 " 个性化
 if filereadable(expand($HOME . '/.vimrc.local'))
     source $HOME/.vimrc.local
+endif
+if filereadable(expand($HOME . '/.vimrc.calendar'))
+    source $HOME/.vimrc.calendar
+endif
+if filereadable(expand($HOME . '/.vimrc.nerdtree'))
+    source $HOME/.vimrc.nerdtree
 endif
 execute pathogen#infect()
 call pathogen#helptags()
