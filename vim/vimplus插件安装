@@ -1,7 +1,5 @@
 1.拉插件
 git clone https://github.com/chxuan/vimplus.git
-cd ./vimplus
-sudo ./install.sh
 2.vim-plug
 mkdir ~/.vim/autoload/
 cd ~/.vim/autoload/
