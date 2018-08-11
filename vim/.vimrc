@@ -1,4 +1,4 @@
- set helplang=cn  
+set helplang=cn  
     set encoding=utf-8  
     set cscopequickfix=s-,c-,d-,i-,t-,e-  
     nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>  
@@ -17,43 +17,8 @@
     let g:SuperTabRetainCompletionType=2  
     let g:SuperTabDefaultCompletionType="<C-X><C-O>"  
     " 自动语法高亮  
-inoremap ( ()<Esc>i
-inoremap [ []<Esc>i
-inoremap { {<CR>}<Esc>O
-autocmd Syntax html,vim inoremap < <lt>><Esc>i| inoremap > <c-r>=ClosePair('>')<CR>
-inoremap ) <c-r>=ClosePair(')')<CR>
-inoremap ] <c-r>=ClosePair(']')<CR>
-inoremap } <c-r>=CloseBracket()<CR>
-inoremap " <c-r>=QuoteDelim('"')<CR>
-inoremap ' <c-r>=QuoteDelim("'")<CR>
+    
 
-function ClosePair(char)
- if getline('.')[col('.') - 1] == a:char
- return "\<Right>"
- else
- return a:char
- endif
-endf
-
-function CloseBracket()
- if match(getline(line('.') + 1), '\s*}') < 0
- return "\<CR>}"
- else
- return "\<Esc>j0f}a"
- endif
-endf
-
-function QuoteDelim(char)
- let line = getline('.')
- let col = col('.')
- if line[col - 2] == "\\"
- return a:char
- elseif line[col - 1] == a:char
- return "\<Right>"
- else
- return a:char.a:char."\<Esc>i"
- endif
-endf
 
      syntax on  
     " 检测文件类型  
@@ -160,19 +125,10 @@ endf
     set fencs=utf-8,ucs-bom,shift-jis,gb18030,gbk,gb2312,cp936  
       
     " set mapleader  
-    let mapleader=","  
+    let mapleader="`"  
       
     nmap J 5j  
     nmap K 5k  
-      
-    " Ctrl+a  
-    nmap <silent> <C-a> ggvG$  
-      
-    " 选中状态下 Ctrl+c 复制  
-    vnoremap <c-c> "+y  
-      
-    " Ctrl+v  
-    nmap <silent> <C-v> "+p  
       
     " 窗口切换  
     nnoremap <c-h> <c-w>h  
@@ -299,7 +255,7 @@ endfunc
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 通用设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let mapleader = ","      " 定义<leader>键
+let mapleader = "`"      " 定义<leader>键
 set nocompatible         " 设置不兼容原始vi模式
 filetype on              " 设置开启文件类型侦测
 filetype plugin on       " 设置加载对应文件类型的插件
@@ -371,6 +327,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'Raimondi/delimitMate'
 
 call plug#end()            
 
@@ -482,5 +439,3 @@ endif
 if filereadable(expand($HOME . '/.vimrc.nerdtree'))
     source $HOME/.vimrc.nerdtree
 endif
-execute pathogen#infect()
-call pathogen#helptags()
