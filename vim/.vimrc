@@ -45,6 +45,11 @@ nnoremap <leader><leader>u :PlugUpdate<cr>
 " 更新插件
 nnoremap <leader><leader>c :PlugClean<cr>
 " 删除插件
+nnoremap <c-h> <c-w>h  
+nnoremap <c-l> <c-w>l  
+nnoremap <c-j> <c-w>j  
+nnoremap <c-k> <c-w>k
+" 窗口切换 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 代码缩进和排版
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
