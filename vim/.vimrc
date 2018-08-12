@@ -27,6 +27,7 @@ set display=lastline     " 避免折行后某一行不见
 set statusline=\ %<%F[%1*%M%*%n%R%H]%=\ %y\ %0(%{&fileformat}\ [%{(&fenc==\"\"?&enc:&fenc).(&bomb?\",BOM\":\"\")}]\ %c:%l/%L%)
 "                        " 设置状态行显示的信息
 set fillchars=vert:\ ,stl:\ ,stlnc:\   " 在分割窗口间留出空白
+set autochdir            " 移至当前文件所在目录
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 快捷键设置
