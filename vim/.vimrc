@@ -33,6 +33,10 @@ set autochdir            " 移至当前文件所在目录
 " 快捷键设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let mapleader = "`"      " 定义<leader>键
+map <F12> : call Clss()<CR>
+func! Clss()
+    exec '!clear'
+    endfunc              " F12一键清屏
 map <F9> :call CompileRunGcc()<CR>
 func! CompileRunGcc()
     exec "w" 
