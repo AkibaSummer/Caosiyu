@@ -2,7 +2,7 @@
 " 基础设置
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nocompatible         " 设置不兼容原始vi模式
-filetype off             " 设置关闭文件类型侦测
+filetype on              " 设置开启文件类型侦测
 filetype plugin on       " 设置加载对应文件类型的插件
 set noeb                 " 关闭错误的提示
 syntax enable            " 开启语法高亮功能
@@ -17,11 +17,12 @@ set number               " 开启行号显示
 set cursorline           " 高亮显示当前行
 highlight CursorLine   cterm=NONE ctermbg=black guibg=NONE guifg=NONE
                          " 高亮显示当前行具体设置
+set statusline=\ %<%F[%1*%M%*%n%R%H]%=\ %y\ %0(%{&fileformat}\ [%{(&fenc==\"\"?&enc:&fenc).(&bomb?\",BOM\":\"\")}]\ %c:%l/%L%)
+                         " 设置状态行显示的信息
 set whichwrap+=<,>,h,l   " 设置光标键跨行
 set ttimeoutlen=0        " 设置<ESC>键响应时间
 set virtualedit=block,onemore   
                          " 允许光标出现在最后一个字符的后面
-syntax on                " 开启语法高亮
 set mouse=a              " 开启鼠标支持
 set backspace=indent,eol,start 
                          " 允许删除换行符
@@ -48,10 +49,6 @@ nnoremap <c-l> <c-w>l
 nnoremap <c-j> <c-w>j  
 nnoremap <c-k> <c-w>k
                          " 窗口切换 
-noremap <Up> <Nop>
-noremap <Left> <Nop>
-noremap <Right> <Nop>
-noremap <Down> <Nop>
 inoremap <Up> <Nop>
 inoremap <Left> <Nop>
 inoremap <Right> <Nop>
@@ -84,6 +81,8 @@ map <F11> :call GDB()<CR>
 func! GDB()
     exec 'Termdebug %<'
     endfunc              " F11进行调试
+map <F10> :NERDTreeToggle<CR>
+                         " F10开启目录树nerdtree插件
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " 代码缩进和排版
@@ -138,7 +137,7 @@ set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin('~/.vim/plugged')
 
-Plugin 'VundleVim/Vundle.vim'
+Plugin 'VundleVim/Vundle.vim'                    " 使用Vundle的必须配置
 Plugin 'chxuan/vimplus-startify'                 " 启动界面
 Plugin 'scrooloose/nerdtree'                     " 目录树
 Plugin 'tiagofumo/vim-nerdtree-syntax-highlight' " 目录树美化
@@ -150,7 +149,10 @@ Plugin 'Lokaltog/vim-easymotion'                 " 快速跳转
 Plugin 'luochen1990/rainbow'                     " 彩虹括号
 "Plugin 'Raimondi/delimitMate'                   " 括号补全
 Plugin 'yianwillis/vimcdoc'                      " HELP文档中文
-Plugin 'sjl/gundo.vim'                           " 显示撤销树
+Plugin 'sjl/gundo.vim'                           " 撤销树
+Plugin 'godlygeek/tabular'                       " 安装vim-markdown的准备
+Plugin 'plasticboy/vim-markdown'                 " markdown 语法高亮
+Plugin 'suan/vim-instant-markdown'               " markdown 实时预览
 
 call vundle#end()            
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
