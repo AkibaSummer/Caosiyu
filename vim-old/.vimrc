@@ -150,8 +150,6 @@ Plugin 'luochen1990/rainbow'                     " 彩虹括号
 "Plugin 'Raimondi/delimitMate'                   " 括号补全
 Plugin 'yianwillis/vimcdoc'                      " HELP文档中文
 Plugin 'sjl/gundo.vim'                           " 撤销树
-Plugin 'godlygeek/tabular'                       " 安装vim-markdown的准备
-Plugin 'plasticboy/vim-markdown'                 " markdown 语法高亮
 Plugin 'suan/vim-instant-markdown'               " markdown 实时预览
 
 call vundle#end()            
